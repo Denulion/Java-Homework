@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/S_01.Login/pom.xml" />
+        <option value="$PROJECT_DIR$/S_03.AVClub/pom.xml" />
+        <option value="$PROJECT_DIR$/S_05.LastWords/pom.xml" />
+        <option value="$PROJECT_DIR$/S_02.LineByLine/pom.xml" />
+        <option value="$PROJECT_DIR$/S_04.FirstWords/pom.xml" />
+        <option value="$PROJECT_DIR$/S_06.AgeOfTheOldest/pom.xml" />
+        <option value="$PROJECT_DIR$/S_07.NameOfTheOldest/pom.xml" />
+        <option value="$PROJECT_DIR$/S_08.PersonalDetails/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="graalvm-jdk-21" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

@@ -46,8 +46,16 @@ public class ArraysTask {
     //surašant reikiamus elementus į naują masyvą b[n+1]. Metodas grąžina naują masyvą.
     //Jei k yra už masyvo ribų, metodas grąžina null (teisingiau būtų mesti exception, bet dar nesimokėm)
     public static int[] insertElementAndReturnNewArray(int[] arr, int k, int x) {
-        //TODO
-        return null;
+        if (k > arr.length || k < 0) return null;
+
+        int[] newArray = new int[arr.length + 1];
+
+        System.arraycopy(arr, 0, newArray, 0, k);
+        newArray[k] = x;
+        for(int i = k+1; i < arr.length + 1; i++){
+            newArray[i] = arr[i - 1];
+        }
+        return newArray;
     }
 
     //Parašykite metodą, kuris grąžintų duoto masyvo apverstą kopija.

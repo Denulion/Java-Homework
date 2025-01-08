@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/S_01.Login/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_01.Login/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_02.LineByLine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_02.LineByLine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_03.AVClub/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_03.AVClub/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_04.FirstWords/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_04.FirstWords/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_05.LastWords/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_05.LastWords/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_06.AgeOfTheOldest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_06.AgeOfTheOldest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_07.NameOfTheOldest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_07.NameOfTheOldest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_08.PersonalDetails/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/S_08.PersonalDetails/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="S_02.LineByLine" />
+        <module name="S_06.AgeOfTheOldest" />
+        <module name="S_08.PersonalDetails" />
+        <module name="S_05.LastWords" />
+        <module name="S_03.AVClub" />
+        <module name="S_01.Login" />
+        <module name="S_07.NameOfTheOldest" />
+        <module name="S_04.FirstWords" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
