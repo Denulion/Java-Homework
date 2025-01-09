@@ -5,7 +5,7 @@ public class GuessingGame {
     private Scanner reader;
 
     public GuessingGame() {
-        // use only this scanner, othervise the tests do not work
+        // use only this scanner, otherwise the tests do not work
         this.reader = new Scanner(System.in);
     }
 
@@ -14,6 +14,11 @@ public class GuessingGame {
 
         // write the guessing logic here
 
+    }
+    public boolean isGreaterThan(int value){
+        System.out.println("Is your number greater than " + value + "? (y/n)");
+        String response = reader.nextLine();
+        return response.equalsIgnoreCase("y");
     }
 
     // implement here the methods isGreaterThan and average
