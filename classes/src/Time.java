@@ -66,4 +66,22 @@ public class Time {
         }
         return this;
     }
+    public Time previousSecond(){
+        setSecond(second - 1);
+        if (second == -1){
+            setSecond(59);
+            setMinute(minute - 1);
+        }
+        if (minute == -1) {
+            setMinute(59);
+            setHour(hour - 1);
+        }
+        if (hour == -1) {
+            setHour(23);
+        }
+        return this;
+    }
+    public String toString(){
+        return String.format("%02d:%02d:%02d", hour, minute, second);
+    }
 }
