@@ -20,4 +20,13 @@ public class Saskaita {
     public double getBalance() {
         return balance;
     }
+
+    public void addBalance(double money){
+        if(money > 0.0) this.balance += money;
+    }
+    public void takeFromBalance(double money){
+        if(this.balance - money < 0){
+
+        }
+    }
 }
