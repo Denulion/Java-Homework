@@ -1,7 +1,7 @@
 public class Saskaita {
     private final String number;
     private final String owner;
-    private double balance;
+    protected double balance;
 
     public Saskaita(String number, String owner, double initialBalance) {
         this.number = number;
@@ -20,13 +20,32 @@ public class Saskaita {
     public double getBalance() {
         return balance;
     }
-
-    public void addBalance(double money){
-        if(money > 0.0) this.balance += money;
-    }
-    public void takeFromBalance(double money){
-        if(this.balance - money < 0){
-
+    public void addBalance(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        } else {
+            System.out.println("No funds");
         }
+    }
+    public boolean takeBalance(double amount) {
+        if (amount > this.balance) {
+            System.out.println("No funds");
+            return false;
+        }
+        if (amount > 0) {
+            this.balance -= amount;
+            return true;
+        } else {
+            System.out.println("Should be positive");
+            return false;
+        }
+    }
+    @Override
+    public String toString() {
+        return "Saskaita{" +
+                "number='" + number + '\'' +
+                ", owner='" + owner + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }
