@@ -1,5 +1,5 @@
 public class SimpleProduct extends Product{
-    private static final double tax = 0.21; // НДС 21%
+    private final double tax = 0.21;
 
     public SimpleProduct(String name, double nettoCost) {
         super(name, nettoCost);
@@ -7,6 +7,6 @@ public class SimpleProduct extends Product{
 
     @Override
     public double calculateFinalPrice() {
-        return getNettoCost() * (1 + tax);
+        return getNettoCost() * (1 + this.tax);
     }
 }
