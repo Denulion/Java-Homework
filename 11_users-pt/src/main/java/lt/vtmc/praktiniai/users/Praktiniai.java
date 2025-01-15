@@ -1,5 +1,7 @@
 package lt.vtmc.praktiniai.users;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Praktiniai {
@@ -38,16 +40,25 @@ public class Praktiniai {
             throw new UnsupportedOperationException("Null");
         }
         for (User i : users){
-            if(i.getName().contains(name))
+            if(i.getName().contains(name)){
+                return i;
+            }
         }
-        return
+        return null;
     }
 
     public static List<User> sortByAge(List<User> users) {
         if (users == null) {
             throw new UnsupportedOperationException("Null");
         }
-        return 0;
+        List<User> sortedUsers = new ArrayList<>(users);
+        sortedUsers.sort(new Comparator<User>() {
+            @Override
+            public int compare(User u1, User u2) {
+                return Integer.compare(u1.getAge(), u2.getAge());
+            }
+        });
+        return sortedUsers;
     }
 
     public static User findOldest(List<User> users) {
