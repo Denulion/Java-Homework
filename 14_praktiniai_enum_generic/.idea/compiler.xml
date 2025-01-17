@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ge_02.SortThemCards" />
+        <module name="ge_01.EnumAndIterator" />
+        <module name="ge_03.Hideout" />
+        <module name="ge_04.Pipe" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
