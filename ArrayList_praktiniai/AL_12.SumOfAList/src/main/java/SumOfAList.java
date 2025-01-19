@@ -9,7 +9,7 @@ public class SumOfAList {
 
         ArrayList<Integer> list = new ArrayList<>();
         while (true) {
-            int input = Integer.valueOf(scanner.nextLine());
+            int input = Integer.parseInt(scanner.nextLine());
             if (input == -1) {
                 break;
             }

@@ -10,7 +10,7 @@ public class OnTheList {
         ArrayList<String> list = new ArrayList<>();
         while (true) {
             String input = scanner.nextLine();
-            if (input.equals("")) {
+            if (input.isEmpty()) {
                 break;
             }
 
