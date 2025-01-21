@@ -23,6 +23,10 @@ public class Product {
         return this.quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public void reduceQuantity(int amount) throws SoldOutException {
         if (amount > this.quantity) {
             throw new SoldOutException(this.name + " is out of stock!");

@@ -1,6 +1,8 @@
 import exceptions.*;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CashRegister {
     private Map<Double, Integer> coins;
@@ -9,12 +11,16 @@ public class CashRegister {
         this.coins = new HashMap<>();
     }
 
-    public void addCash(double amount, int count) throws PayNotAcceptedException {
-        if (this.coins.containsKey(amount)) {
-            this.coins.put(amount, this.coins.get(amount) + count);
+    public void addCash(double value, int count) {
+        if (this.coins.containsKey(value)) {
+            this.coins.put(value, this.coins.get(value) + count);
         } else {
-            throw new PayNotAcceptedException("Invalid currency value!");
+            this.coins.put(value, count);
         }
+    }
+
+    public Map<Double, Integer> getCoins() {
+        return this.coins;
     }
 
     public Map<Double, Integer> change(double change) throws NotEnoughChangeException {
@@ -33,5 +39,21 @@ public class CashRegister {
         }
 
         return changeToReturn;
+    }
+
+    public void displayCash() {
+        this.coins.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(i -> System.out.println("Value: " + i.getKey() + ", quantity: " + i.getValue()));
+    }
+
+    public String printValues() {
+        return this.coins.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(i -> {
+                    String[] parts = i.toString().split("=");
+                    return parts[0];
+                })
+                .collect(Collectors.joining(", "));
     }
 }

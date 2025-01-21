@@ -16,8 +16,26 @@ public class ProductStorage {
         throw new SoldOutException("Product not available!");
     }
 
+    public boolean hasProduct(String name) {
+        return this.products.containsKey(name);
+    }
+
+    public void addProduct(String name, Product product) {
+        this.products.put(name, product);
+    }
+
+    public void minusProduct(String name, int amount) {
+        Product product = this.products.get(name);
+
+        if (product.getQuantity() - amount == 0){
+            this.products.remove(name);
+        } else {
+            int newQuantity = product.getQuantity() - amount;
+            product.setQuantity(newQuantity);
+        }
+    }
+
     public void displayProducts() {
-        System.out.println("Available Products:");
         this.products.forEach((key, product) -> System.out.println(product.getName()
                 + ": $" + product.getPrice() + " (Quantity: " + product.getQuantity() + ")"));
     }
