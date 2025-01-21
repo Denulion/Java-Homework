@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+
 import exceptions.*;
 
 public class ProductStorage {
@@ -27,7 +28,7 @@ public class ProductStorage {
     public void minusProduct(String name, int amount) {
         Product product = this.products.get(name);
 
-        if (product.getQuantity() - amount == 0){
+        if (product.getQuantity() - amount == 0) {
             this.products.remove(name);
         } else {
             int newQuantity = product.getQuantity() - amount;
