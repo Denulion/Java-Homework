@@ -53,7 +53,7 @@ public class SupermarketServiceImpl implements SupermarketService {
 
                 if (input == null || input.isEmpty()) {
                     System.out.println("Input is empty, try again.");
-                } else if (storage.hasProduct(input.toUpperCase())) {
+                } else if (storage.hasProduct(input)) {
                     processPurchase(input);
                 } else if (input.equalsIgnoreCase("Quit")) {
                     return;
