@@ -9,7 +9,7 @@ public class SupermarketServiceImpl implements SupermarketService {
 
     private Scanner scanner = new Scanner(System.in);
     ProductStorage storage = new ProductStorage();
-    private CashRegister cashRegister = new CashRegister();
+    CashRegister cashRegister = new CashRegister();
 
     private SupermarketServiceImpl() {
     }
@@ -81,7 +81,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         console();
     }
 
-    private void processPurchase(String productName) throws SoldOutException, NotEnoughChangeException, PayNotAcceptedException {
+    public void processPurchase(String productName) throws SoldOutException, NotEnoughChangeException, PayNotAcceptedException {
         try {
             System.out.println("You are trying to buy " + storage.getProduct(productName).getName()
                     + ". You need to pay " + storage.getProduct(productName).getPrice());
@@ -102,7 +102,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         }
     }
 
-    private double handlePayment(double needToPay) throws PayNotAcceptedException {
+    public double handlePayment(double needToPay) throws PayNotAcceptedException {
         double paidInTotal = 0;
         ArrayList<Double> paid = new ArrayList<>();
 
@@ -135,7 +135,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         return paidInTotal;
     }
 
-    private void handleChange(double paidInTotal, double needToPay) throws NotEnoughChangeException {
+    public void handleChange(double paidInTotal, double needToPay) throws NotEnoughChangeException {
         if (paidInTotal > needToPay) {
             try {
                 double change = paidInTotal - needToPay;
@@ -150,7 +150,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         }
     }
 
-    private void displayInitialInventory() {
+    public void displayInitialInventory() {
         System.out.println("Initial Product Inventory:");
         storage.displayProducts();
 
@@ -160,7 +160,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         cashRegister.displayCash();
     }
 
-    private void displayUpdatedInventory() {
+    public void displayUpdatedInventory() {
         System.out.println("Updated Product Inventory:");
         storage.displayProducts();
 
@@ -170,7 +170,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         cashRegister.displayCash();
     }
 
-    private void handleException(Exception e) {
+    public void handleException(Exception e) {
         System.out.println("Error: " + e.getMessage());
     }
 }

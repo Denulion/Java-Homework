@@ -17,6 +17,10 @@ public class ProductStorage {
         throw new SoldOutException("Product not available!");
     }
 
+    public Map<String, Product> getProducts() {
+        return products;
+    }
+
     public boolean hasProduct(String name) {
         return this.products.containsKey(name);
     }
