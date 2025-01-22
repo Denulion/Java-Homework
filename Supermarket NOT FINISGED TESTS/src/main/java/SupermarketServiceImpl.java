@@ -49,9 +49,9 @@ public class SupermarketServiceImpl implements SupermarketService {
                 displayInitialInventory();
 
                 System.out.println("What would you like to buy? Type in the name of desired product: ");
-                String input = scanner.nextLine();
+                String input = scanner.nextLine().toUpperCase();
 
-                if (input == null || input.isEmpty()) {
+                if (input.isEmpty()) {
                     System.out.println("Input is empty, try again.");
                 } else if (storage.hasProduct(input)) {
                     processPurchase(input);

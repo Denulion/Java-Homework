@@ -3,7 +3,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class ProductTest {
+public class ProductStorageTest {
     private SupermarketServiceImpl service;
 
     @BeforeEach
@@ -18,13 +18,15 @@ public class ProductTest {
     }
 
     @Test
-    void testSetQuantity() throws SoldOutException {
-        service.storage.getProduct("APPLE").setQuantity(40);
-        assertEquals(40, service.storage.getProduct("APPLE").getQuantity(), "You should be capable to change the quantity of product!");
+    void testAddProduct() {
+        service.storage.addProduct("BEER", new Product("BEER", 2.0, 10));
+        assertTrue(service.storage.hasProduct("BEER"));
     }
+
     @Test
-    void testProduct() throws SoldOutException {
-        String test = service.storage.getProduct("BREAD").toString();
-        assertEquals("BREAD: price: 2.5, quantity: 5", test, "Expected: BREAD: price: 2.5, quantity: 5\n Actual: " + test);
+    void testMinusProduct() throws SoldOutException {
+        service.storage.getProduct("APPLE").setQuantity(1);
+        service.storage.minusProduct("APPLE", 1);
+        assertFalse(service.storage.hasProduct("APPLE"));
     }
 }

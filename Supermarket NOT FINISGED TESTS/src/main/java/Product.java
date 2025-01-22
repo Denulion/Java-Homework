@@ -27,10 +27,8 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public void reduceQuantity(int amount) throws SoldOutException {
-        if (amount > this.quantity) {
-            throw new SoldOutException(this.name + " is out of stock!");
-        }
-        this.quantity -= amount;
+    @Override
+    public String toString() {
+        return this.name + ": price: " + this.price + ", quantity: " + this.quantity;
     }
 }

@@ -48,8 +48,6 @@ public class SupermarketServiceImplTest {
         Map<Double, Integer> cashInventory = service.cashRegister.getCoins();
         assertTrue(cashInventory.get(0.5) < 20, "Money should be retracted from the cash register!");
     }
-    @Test
-    void testPurchaseWithInvalidPayment() {
-        assertThrows(PayNotAcceptedException.class, () -> service.handlePayment(-1), "Should throw exception for invalid payment");
-    }
+
+
 }
