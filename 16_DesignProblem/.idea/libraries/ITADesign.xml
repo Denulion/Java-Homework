@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ITADesign">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ITADesign.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
