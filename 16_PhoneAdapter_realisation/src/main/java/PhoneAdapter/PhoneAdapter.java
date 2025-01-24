@@ -5,11 +5,11 @@ import itaphones.phone.Phone;
 
 public class PhoneAdapter implements Phone {
     private final MobilePhone mobilePhone;
+    private String response = "";
 
     public PhoneAdapter(MobilePhone mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
-    private String response = "";
 
     @Override
     public void dial(String s) {
