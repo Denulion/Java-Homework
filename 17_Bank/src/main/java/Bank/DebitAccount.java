@@ -5,8 +5,8 @@ import ibank.Account;
 import java.math.BigDecimal;
 
 public class DebitAccount implements Account {
-    private String name;
-    private String number;
+    private final String name;
+    private final String number;
     private BigDecimal balance;
 
     public DebitAccount(String name, String number){
