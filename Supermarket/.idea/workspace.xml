@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f6b06cc-dada-4f33-ae76-edd82498418d" name="Changes" comment="" />
+    <list default="true" id="4c0dd665-e21b-4362-9ae7-1b3513d2ed46" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +13,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -21,68 +20,121 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="JavaAutoRunManager">
+    <enabled-run-configurations>
+      <run-configuration type="JUnit" name="SupermarketServiceImplTest.testQuitCommand" />
+    </enabled-run-configurations>
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
+  &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2rtmVPWtSjXMlocl8SLt9UWvLtY" />
+  <component name="ProjectId" id="2rzNkWQOS6JxPXkcU7ZdSpkmqdc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Mokinys/Desktop/Java-Homework/Supermarket NOT FINISGED TESTS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.CashRegisterTest.testPrintValues.executor": "Run",
+    "JUnit.ProductStorageTest.executor": "Run",
+    "JUnit.ProductTest.testProduct.executor": "Run",
+    "JUnit.ProductTest.testSetQuantity.executor": "Run",
+    "JUnit.SupermarketServiceImplTest.testHandleChange.executor": "Run",
+    "JUnit.SupermarketServiceImplTest.testHandleChangeNotEnoughCoins.executor": "Run",
+    "JUnit.SupermarketServiceImplTest.testPurchaseWithInvalidPayment.executor": "Run",
+    "JUnit.SupermarketServiceImplTest.testQuitCommand.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ronya/Desktop/JavaTest/AndrejTitkovTestPt2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+}]]></component>
+  <component name="RunManager" selected="JUnit.CashRegisterTest.testPrintValues">
+    <configuration name="CashRegisterTest.testPrintValues" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Supermarket" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CashRegisterTest" />
+      <option name="METHOD_NAME" value="testPrintValues" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductStorageTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Supermarket" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ProductStorageTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductTest.testProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Supermarket" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ProductTest" />
+      <option name="METHOD_NAME" value="testProduct" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductTest.testSetQuantity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Supermarket" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ProductTest" />
+      <option name="METHOD_NAME" value="testSetQuantity" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SupermarketServiceImplTest.testHandleChange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Supermarket" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SupermarketServiceImplTest" />
+      <option name="METHOD_NAME" value="testHandleChange" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.CashRegisterTest.testPrintValues" />
+        <item itemvalue="JUnit.ProductStorageTest" />
+        <item itemvalue="JUnit.ProductTest.testProduct" />
+        <item itemvalue="JUnit.ProductTest.testSetQuantity" />
+        <item itemvalue="JUnit.SupermarketServiceImplTest.testHandleChange" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.117" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4f6b06cc-dada-4f33-ae76-edd82498418d" name="Changes" comment="" />
-      <created>1737386769867</created>
+      <changelist id="4c0dd665-e21b-4362-9ae7-1b3513d2ed46" name="Changes" comment="" />
+      <created>1737558086849</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1737386769867</updated>
-      <workItem from="1737386771162" duration="10234000" />
-      <workItem from="1737471666913" duration="7017000" />
-      <workItem from="1737558048964" duration="37000" />
-      <workItem from="1737620218535" duration="8000" />
-      <workItem from="1737701697808" duration="5000" />
+      <updated>1737558086849</updated>
+      <workItem from="1737558088086" duration="3423000" />
+      <workItem from="1737996055929" duration="21000" />
     </task>
     <servers />
   </component>
