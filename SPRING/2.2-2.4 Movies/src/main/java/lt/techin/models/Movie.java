@@ -2,8 +2,8 @@ package lt.techin.models;
 
 public class Movie {
     private final int id;
-    private final String title;
-    private final String director;
+    private String title;
+    private String director;
 
     public Movie(int id, String title, String director) {
         this.id = id;
@@ -13,6 +13,14 @@ public class Movie {
 
     public int getId() {
         return id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
     }
 
     public String getTitle() {

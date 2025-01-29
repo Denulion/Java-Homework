@@ -60,4 +60,39 @@ public class MovieController {
         }
         return ResponseEntity.ok(foundMovie.get());
     }
+
+    @PutMapping("/movies/{index}")
+    public ResponseEntity<Movie> putMovies(@PathVariable int index, @RequestBody Movie movie) {
+        if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (index <= movieList.size() - 1) {
+            Movie movieFromDb = movieList.get(index);
+
+            movieFromDb.setTitle(movie.getTitle());
+            movieFromDb.setDirector(movie.getDirector());
+
+            return ResponseEntity.ok(movieFromDb);
+        }
+
+        movieList.add(movie);
+
+        return ResponseEntity.created(
+                        ServletUriComponentsBuilder.fromCurrentRequest()
+                                .path("/{index}")
+                                .buildAndExpand(movieList.size() - 1)
+                                .toUri())
+                .body(movie);
+    }
+
+    @DeleteMapping("/movies/{index}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable int index) {
+        if (index > movieList.size() - 1) {
+            return ResponseEntity.notFound().build();
+        }
+
+        movieList.remove(index);
+        return ResponseEntity.noContent().build();
+    }
 }
