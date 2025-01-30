@@ -84,7 +84,7 @@ public class MovieController {
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()
-                                .path("/{index}")
+                                .replacePath("/api/movies/{index}")
                                 .buildAndExpand(movieList.size() - 1)
                                 .toUri())
                 .body(movie);
