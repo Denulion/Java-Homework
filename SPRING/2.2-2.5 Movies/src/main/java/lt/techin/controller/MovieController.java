@@ -1,6 +1,7 @@
 package lt.techin.controller;
 
 import lt.techin.models.Movie;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -62,9 +63,12 @@ public class MovieController {
     }
 
     @PutMapping("/movies/{index}")
-    public ResponseEntity<Movie> putMovies(@PathVariable int index, @RequestBody Movie movie) {
+    public ResponseEntity<?> putMovies(@PathVariable int index, @RequestBody Movie movie) {
         if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
-            return ResponseEntity.badRequest().build();
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add("Error-Message", "Your title or director is empty!");
+//            return ResponseEntity.badRequest().headers(headers).build();
+            return ResponseEntity.badRequest().body("Your title or director is empty!");
         }
 
         if (index <= movieList.size() - 1) {
