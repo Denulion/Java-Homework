@@ -48,6 +48,10 @@ public class MovieController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or author is empty");
         }
 
+        if (movieService.existsMovieByTitle(movie.getTitle()) && movieService.existsMovieByAuthor(movie.getAuthor())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A movie with this title and director already exists!");
+        }
+
         Movie savedMovie = movieService.saveMovie(movie);
 
         return ResponseEntity.created(
@@ -92,6 +96,10 @@ public class MovieController {
             movieFromDb.setAuthor(movie.getAuthor());
 
             return ResponseEntity.ok(movieService.saveMovie(movieFromDb));
+        }
+
+        if (movieService.existsMovieByTitle(movie.getTitle()) && movieService.existsMovieByAuthor(movie.getAuthor())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A movie with this title and director already exists!");
         }
 
         Movie savedMovie = movieService.saveMovie(movie);

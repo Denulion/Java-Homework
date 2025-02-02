@@ -10,8 +10,13 @@ function Book({ book, setUpdate }) {
   const handleToggle = async () => {
     try {
       const updatedReservedState = !isReserved;
-      const updatedObject = await putData(book.id, { reserved: updatedReservedState });
+
+      console.log("Отправка:", { ...book, reserved: updatedReservedState });
+
+      const updatedObject = await putData(book.id, { ...book, reserved: updatedReservedState });
   
+      console.log("Ответ от сервера:", updatedObject);
+
       setIsReserved(updatedObject.reserved);
       setUpdate((prev) => prev + 1);
     } catch (error) {

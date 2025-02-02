@@ -44,4 +44,12 @@ public class MovieService {
     public Movie findMovieByTitle(String title) {
         return movieRepository.findByTitle(title);
     }
+
+    public boolean existsMovieByAuthor(String author) {
+        return movieRepository.existsByAuthor(author);
+    }
+
+    public  Movie findMovieByAuthor(String author) {
+        return movieRepository.findByAuthor(author);
+    }
 }

@@ -46,7 +46,7 @@ function Form({ setUpdate, book, setFormOpen }) {
   const formSubmitHandler = async (data) => {
     try {
       if (book) {
-        await putData(book.id, data);
+        await putData(book.id, {...book, ...data});
         setFormOpen(false);
       } else {
         await postdata({ ...data, reserved: false });

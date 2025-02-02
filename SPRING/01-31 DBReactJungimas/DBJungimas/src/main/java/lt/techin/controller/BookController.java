@@ -64,6 +64,10 @@ public class BookController {
 
             bookFromDb.setTitle(book.getTitle());
             bookFromDb.setAuthor(book.getAuthor());
+            bookFromDb.setCategory(book.getCategory());
+            bookFromDb.setPrice(book.getPrice());
+            bookFromDb.setCover(book.getCover());
+            bookFromDb.setReserved(book.isReserved());
 
             return ResponseEntity.ok(bookService.saveBook(bookFromDb));
         }
