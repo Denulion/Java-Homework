@@ -1,8 +1,9 @@
 package lt.techin.controller;
 
-import lt.techin.models.Movie;
+import lt.techin.model.Movie;
 import lt.techin.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -94,6 +95,9 @@ public class MovieController {
 
             movieFromDb.setTitle(movie.getTitle());
             movieFromDb.setAuthor(movie.getAuthor());
+            movieFromDb.setReviews(movie.getReviews());
+            movieFromDb.setCategories(movie.getCategories());
+            movieFromDb.setMovieDetails(movie.getMovieDetails());
 
             return ResponseEntity.ok(movieService.saveMovie(movieFromDb));
         }
@@ -120,5 +124,14 @@ public class MovieController {
 
         movieService.deleteMovieById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Pagination
+    @GetMapping("/movies/pagination")
+    public ResponseEntity<Page<Movie>> getMoviePage(@RequestParam int page,
+                                                    @RequestParam int size,
+                                                    @RequestParam (required = false) String sort) {
+
+        return ResponseEntity.ok(movieService.findAllMoviePage(page, size, sort));
     }
 }

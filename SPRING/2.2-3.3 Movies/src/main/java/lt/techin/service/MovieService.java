@@ -1,8 +1,12 @@
 package lt.techin.service;
 
-import lt.techin.models.Movie;
+import lt.techin.model.Movie;
 import lt.techin.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,5 +55,17 @@ public class MovieService {
 
     public  Movie findMovieByAuthor(String author) {
         return movieRepository.findByAuthor(author);
+    }
+
+    public Page<Movie> findAllMoviePage(int page, int size, String sort) {
+        if (sort == null) {
+            Pageable pageable = PageRequest.of(page, size);
+
+            return movieRepository.findAll(pageable);
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+
+        return movieRepository.findAll(pageable);
     }
 }
