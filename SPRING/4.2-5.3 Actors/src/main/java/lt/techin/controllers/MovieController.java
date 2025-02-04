@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lt.techin.model.Movie;
 import lt.techin.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,5 +99,13 @@ public class MovieController {
 
         movieService.deleteMovieById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Pagination
+    @GetMapping("/movies/pagination")
+    public ResponseEntity<Page<Movie>> getMoviePage(@RequestParam int page,
+                                                    @RequestParam int size,
+                                                    @RequestParam (required = false) String sort) {
+        return ResponseEntity.ok(movieService.findAllMoviePage(page, size, sort));
     }
 }
