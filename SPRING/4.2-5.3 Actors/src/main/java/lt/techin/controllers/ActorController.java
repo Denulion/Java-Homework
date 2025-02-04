@@ -1,5 +1,6 @@
 package lt.techin.controllers;
 
+import jakarta.validation.Valid;
 import lt.techin.model.Actor;
 import lt.techin.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,14 @@ public class ActorController {
     }
 
     @PostMapping("/actors")
-    public ResponseEntity<?> addActor(@RequestBody Actor actor) {
-        if(actor.getName().isEmpty()) {return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is empty!");}
-
+    public ResponseEntity<?> addActor(@Valid @RequestBody Actor actor) {
         Actor savedActor = actorService.saveActor(actor);
 
         return ResponseEntity.created(
-                ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(savedActor.getId())
-                        .toUri())
+                        ServletUriComponentsBuilder.fromCurrentRequest()
+                                .path("/{id}")
+                                .buildAndExpand(savedActor.getId())
+                                .toUri())
                 .body(actor);
     }
 

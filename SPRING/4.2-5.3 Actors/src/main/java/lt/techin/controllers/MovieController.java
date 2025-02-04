@@ -1,5 +1,6 @@
 package lt.techin.controllers;
 
+import jakarta.validation.Valid;
 import lt.techin.model.Movie;
 import lt.techin.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +19,26 @@ public class MovieController {
     private final MovieService movieService;
 
     @Autowired
-    public MovieController(MovieService movieService){this.movieService = movieService;}
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies(){return ResponseEntity.ok(movieService.findAllMovies());}
+    public ResponseEntity<List<Movie>> getMovies() {
+        return ResponseEntity.ok(movieService.findAllMovies());
+    }
 
     @GetMapping("/movies/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable long id) {
         Optional<Movie> foundMovie = movieService.findMovieById(id);
-        if(foundMovie.isEmpty()) {return ResponseEntity.notFound().build();}
+        if (foundMovie.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(foundMovie.get());
     }
 
     @PostMapping("/movies")
-    public ResponseEntity<?> postMovie(@RequestBody Movie movie) {
-        if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title or director is empty");
-        }
-
+    public ResponseEntity<?> postMovie(@Valid @RequestBody Movie movie) {
         if (movieService.existsMovieByTitle(movie.getTitle()) && movieService.existsMovieByDirector(movie.getDirector())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A movie with this title and director already exists!");
         }
@@ -61,11 +64,7 @@ public class MovieController {
     }
 
     @PutMapping("/movies/{id}")
-    public ResponseEntity<?> putMovies(@PathVariable long id, @RequestBody Movie movie) {
-        if (movie.getTitle().isEmpty() || movie.getDirector().isEmpty()) {
-            return ResponseEntity.badRequest().body("Your title or director is empty!");
-        }
-
+    public ResponseEntity<?> putMovies(@Valid @PathVariable long id, @RequestBody Movie movie) {
         if (movieService.existsMovieById(id)) {
             Movie movieFromDb = movieService.findMovieById(id).get();
 
