@@ -1,5 +1,6 @@
 package lt.techin.services;
 
+import lt.techin.dto.MovieDTO;
 import lt.techin.model.Movie;
 import lt.techin.repositories.MovieRepository;
 import org.springframework.data.domain.Page;
@@ -64,6 +65,8 @@ public class MovieService {
     public Page<Movie> findAllMoviePage(int page, int size, String sort) {
         if (sort == null) {
             Pageable pageable = PageRequest.of(page, size);
+
+            return movieRepository.findAll(pageable);
         }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sort));

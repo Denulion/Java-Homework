@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/api")
@@ -110,9 +111,12 @@ public class MovieController {
 
     //Pagination
     @GetMapping("/movies/pagination")
-    public ResponseEntity<Page<Movie>> getMoviePage(@RequestParam int page,
-                                                    @RequestParam int size,
-                                                    @RequestParam(required = false) String sort) {
-        return ResponseEntity.ok(movieService.findAllMoviePage(page, size, sort));
+    public ResponseEntity<Page<MovieDTO>> getMoviePage(@RequestParam int page,
+                                                       @RequestParam int size,
+                                                       @RequestParam(required = false) String sort) {
+        Page<Movie> movies = movieService.findAllMoviePage(page, size, sort);
+        Page<MovieDTO> dtoMovies = movies.map(MovieMapper::toMovieDTO);
+
+        return ResponseEntity.ok(dtoMovies);
     }
 }
