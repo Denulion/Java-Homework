@@ -57,13 +57,13 @@ public class MovieController {
     }
 
     @GetMapping("/movies/search")
-    public ResponseEntity<Movie> findMovieByTitle(@RequestParam String title) {
+    public ResponseEntity<MovieDTO> findMovieByTitle(@RequestParam String title) {
         for (Movie movie : movieService.findAllMovies()) {
             if (!movieService.existsMovieByTitle(title)) {
                 return ResponseEntity.notFound().build();
             }
         }
-        return ResponseEntity.ok(movieService.findMovieByTitle(title));
+        return ResponseEntity.ok(MovieMapper.toMovieDTO(movieService.findMovieByTitle(title)));
     }
 
     @PutMapping("/movies/{id}")
@@ -73,7 +73,9 @@ public class MovieController {
 
             MovieMapper.updateMovieFromDTO(movieFromDb, movieDTO);
 
-            return ResponseEntity.ok(movieService.saveMovie(movieFromDb));
+            movieService.saveMovie(movieFromDb);
+
+            return ResponseEntity.ok(movieDTO);
         }
 
         if (movieService.existsMovieByTitle(movieDTO.title()) && movieService.existsMovieByDirector(movieDTO.director())) {
