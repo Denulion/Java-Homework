@@ -15,9 +15,15 @@ import java.util.Optional;
 public class MovieService {
     private final MovieRepository movieRepository;
 
-    public MovieService(MovieRepository movieRepository) {this.movieRepository = movieRepository;}
+    public MovieService(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
-    public List<Movie> findAllMovies(){return movieRepository.findAll();};
+    public List<Movie> findAllMovies() {
+        return movieRepository.findAll();
+    }
+
+    ;
 
     public boolean existsMovieById(long id) {
         return movieRepository.existsById(id);
@@ -27,7 +33,9 @@ public class MovieService {
         return movieRepository.findById(id);
     }
 
-    public Movie saveMovie(Movie movie) {return movieRepository.save(movie);}
+    public Movie saveMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
 
     public void deleteMovieById(long id) {
         movieRepository.deleteById(id);
@@ -41,16 +49,20 @@ public class MovieService {
         return movieRepository.findByTitle(title);
     }
 
+    public List<Movie> findAllMoviesByTitleContaining(String title) {
+        return movieRepository.findAllByTitleContaining(title);
+    }
+
     public boolean existsMovieByDirector(String director) {
         return movieRepository.existsByDirector(director);
     }
 
-    public  Movie findMovieByDirector(String director) {
+    public Movie findMovieByDirector(String director) {
         return movieRepository.findByDirector(director);
     }
 
     public Page<Movie> findAllMoviePage(int page, int size, String sort) {
-        if(sort == null) {
+        if (sort == null) {
             Pageable pageable = PageRequest.of(page, size);
         }
 

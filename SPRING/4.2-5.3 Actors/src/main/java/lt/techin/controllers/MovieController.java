@@ -1,6 +1,7 @@
 package lt.techin.controllers;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lt.techin.dto.MovieDTO;
 import lt.techin.dto.MovieMapper;
 import lt.techin.model.Movie;
@@ -64,6 +65,11 @@ public class MovieController {
             }
         }
         return ResponseEntity.ok(MovieMapper.toMovieDTO(movieService.findMovieByTitle(title)));
+    }
+
+    @GetMapping("/movies/search/by-title")
+    public ResponseEntity<List<MovieDTO>> getMoviesByTitleContaining(@RequestParam String title) {
+        return ResponseEntity.ok(MovieMapper.toMovieDTOList(movieService.findAllMoviesByTitleContaining(title)));
     }
 
     @PutMapping("/movies/{id}")
