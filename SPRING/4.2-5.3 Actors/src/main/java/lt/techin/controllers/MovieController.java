@@ -41,12 +41,12 @@ public class MovieController {
     }
 
     @PostMapping("/movies")
-    public ResponseEntity<?> postMovie(@Valid @RequestBody Movie movie) {
-        if (movieService.existsMovieByTitle(movie.getTitle()) && movieService.existsMovieByDirector(movie.getDirector())) {
+    public ResponseEntity<?> postMovie(@Valid @RequestBody MovieDTO movieDTO) {
+        if (movieService.existsMovieByTitle(movieDTO.title()) && movieService.existsMovieByDirector(movieDTO.director())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A movie with this title and director already exists!");
         }
 
-        Movie savedMovie = movieService.saveMovie(movie);
+        Movie savedMovie = movieService.saveMovie(MovieMapper.toMovie(movieDTO));
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()
