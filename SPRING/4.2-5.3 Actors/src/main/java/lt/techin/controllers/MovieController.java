@@ -1,6 +1,8 @@
 package lt.techin.controllers;
 
 import jakarta.validation.Valid;
+import lt.techin.dto.MovieDTO;
+import lt.techin.dto.MovieMapper;
 import lt.techin.model.Movie;
 import lt.techin.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +27,17 @@ public class MovieController {
     }
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies() {
-        return ResponseEntity.ok(movieService.findAllMovies());
+    public ResponseEntity<List<MovieDTO>> getMovies() {
+        return ResponseEntity.ok(MovieMapper.toMovieDTOList(movieService.findAllMovies()));
     }
 
     @GetMapping("/movies/{id}")
-    public ResponseEntity<Movie> getMovie(@PathVariable long id) {
+    public ResponseEntity<MovieDTO> getMovie(@PathVariable long id) {
         Optional<Movie> foundMovie = movieService.findMovieById(id);
         if (foundMovie.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(foundMovie.get());
+        return ResponseEntity.ok(MovieMapper.toMovieDTO(foundMovie.get()));
     }
 
     @PostMapping("/movies")
@@ -65,7 +67,7 @@ public class MovieController {
     }
 
     @PutMapping("/movies/{id}")
-    public ResponseEntity<?> putMovies(@Valid @PathVariable long id, @RequestBody Movie movie) {
+    public ResponseEntity<?> putMovies(@PathVariable long id, @Valid @RequestBody Movie movie) {
         if (movieService.existsMovieById(id)) {
             Movie movieFromDb = movieService.findMovieById(id).get();
 
@@ -105,7 +107,7 @@ public class MovieController {
     @GetMapping("/movies/pagination")
     public ResponseEntity<Page<Movie>> getMoviePage(@RequestParam int page,
                                                     @RequestParam int size,
-                                                    @RequestParam (required = false) String sort) {
+                                                    @RequestParam(required = false) String sort) {
         return ResponseEntity.ok(movieService.findAllMoviePage(page, size, sort));
     }
 }
