@@ -53,7 +53,7 @@ public class MovieController {
                                 .path("/{id}")
                                 .buildAndExpand(savedMovie.getId())
                                 .toUri())
-                .body(movie);
+                .body(MovieMapper.toMovieDTO(savedMovie));
     }
 
     @GetMapping("/movies/search")
