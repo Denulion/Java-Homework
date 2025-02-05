@@ -32,7 +32,6 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    @NotEmpty(message = "List of actors is empty!")
     private List<Actor> actors;
 
     public Movie(String title, String director, List<Screening> screenings, List<Actor> actors) {

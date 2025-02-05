@@ -11,12 +11,16 @@ public class MovieMapper {
 
         return movieList.stream()
                 .map(movie -> new MovieDTO(movie.getId(), movie.getTitle(), movie.getDirector(),
-                        movie.getScreenings(), movie.getActors()))
+                        ScreeningMapper.toScreeningDTOList(movie), ActorMapper.toActorDTOList(movie)))
                 .collect(Collectors.toList());
     }
 
     public static MovieDTO toMovieDTO(Movie movie) {
-        return new MovieDTO(movie.getId(), movie.getTitle(), movie.getDirector(), movie.getScreenings(), movie.getActors());
+        List<ScreeningDTO> screeningsDTO = movie.getScreenings().stream()
+                .map(ScreeningMapper::toScreeningDTO)
+                .collect(Collectors.toList());
+
+        return new MovieDTO(movie.getId(), movie.getTitle(), movie.getDirector(), screeningsDTO, ActorMapper.toActorDTOList(movie));
     }
 
     public static Movie toMovie(MovieDTO movieDTO) {
@@ -30,7 +34,7 @@ public class MovieMapper {
     public static void updateMovieFromDTO(Movie movie, MovieDTO movieDTO) {
         movie.setTitle(movieDTO.title());
         movie.setDirector(movieDTO.director());
-        movie.setScreenings(movieDTO.screenings());
-        movie.setActors(movieDTO.actors());
+        movie.setScreenings(ScreeningMapper.toScreeningListFromDTO(movieDTO.screenings()));
+        movie.setActors(ActorMapper.toActorListFromDTO(movieDTO.actors()));
     }
 }

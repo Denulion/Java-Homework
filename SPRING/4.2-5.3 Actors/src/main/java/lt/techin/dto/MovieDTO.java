@@ -21,7 +21,7 @@ public record MovieDTO(long id,
                        String director,
                        @NotEmpty(message = "List of screenings is empty!")
                        @Valid
-                       List<Screening> screenings,
+                       List<ScreeningDTO> screenings,
                        @NotEmpty(message = "List of actors is empty!")
-                       List<Actor> actors) {
+                       List<ActorDTO> actors) {
 }
