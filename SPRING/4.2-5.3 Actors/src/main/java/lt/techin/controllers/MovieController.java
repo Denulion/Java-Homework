@@ -67,30 +67,27 @@ public class MovieController {
     }
 
     @PutMapping("/movies/{id}")
-    public ResponseEntity<?> putMovies(@PathVariable long id, @Valid @RequestBody Movie movie) {
+    public ResponseEntity<?> putMovies(@PathVariable long id, @Valid @RequestBody MovieDTO movieDTO) {
         if (movieService.existsMovieById(id)) {
             Movie movieFromDb = movieService.findMovieById(id).get();
 
-            movieFromDb.setTitle(movie.getTitle());
-            movieFromDb.setDirector(movie.getDirector());
-            movieFromDb.setScreenings(movie.getScreenings());
-            movieFromDb.setActors(movie.getActors());
+            MovieMapper.updateMovieFromDTO(movieFromDb, movieDTO);
 
             return ResponseEntity.ok(movieService.saveMovie(movieFromDb));
         }
 
-        if (movieService.existsMovieByTitle(movie.getTitle()) && movieService.existsMovieByTitle(movie.getTitle())) {
+        if (movieService.existsMovieByTitle(movieDTO.title()) && movieService.existsMovieByDirector(movieDTO.director())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A movie with this title and director already exists!");
         }
 
-        Movie savedMovie = movieService.saveMovie(movie);
+        Movie savedMovie = movieService.saveMovie(MovieMapper.toMovie(movieDTO));
 
         return ResponseEntity.created(
                         ServletUriComponentsBuilder.fromCurrentRequest()
                                 .replacePath("/api/movies/{id}")
                                 .buildAndExpand(savedMovie.getId())
                                 .toUri())
-                .body(movie);
+                .body(MovieMapper.toMovieDTO(savedMovie));
     }
 
     @DeleteMapping("/movies/{id}")
