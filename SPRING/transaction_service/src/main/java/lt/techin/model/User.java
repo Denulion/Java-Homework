@@ -1,9 +1,7 @@
 package lt.techin.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,26 +15,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Should not be null or empty!")
-    @Length(min = 2, max = 80, message = "First name is too long or too short!")
     private String firstName;
-
-    @NotBlank(message = "Should not be null or empty!")
-    @Length(min = 2, max = 80, message = "Last name is too long or too short!")
     private String lastName;
-
-    @NotBlank(message = "Should not be null or empty!")
-    //@Email
     private String email;
-
-    @NotBlank(message = "Should not be null or empty!")
-    @Length(min = 2, max = 20, message = "Phone number is too short or too long!")
     private String phoneNumber;
 
     @CreationTimestamp
     private LocalDateTime creationDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts = new ArrayList<>();
 
     public User(String firstName, String lastName, String email, String phoneNumber) {

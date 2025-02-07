@@ -24,8 +24,6 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    ;
-
     public boolean existsMovieById(long id) {
         return movieRepository.existsById(id);
     }

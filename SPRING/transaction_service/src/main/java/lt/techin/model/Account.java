@@ -19,11 +19,67 @@ public class Account {
     @NotBlank
     @Size(min = 10, max = 20, message = "Account number is too long or too short!")
     private String accountNumber;
-
     private BigDecimal balance;
-
-    private String currency;
 
     @CreationTimestamp
     private LocalDateTime creationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
+
+    public Account(String accountNumber, BigDecimal balance, LocalDateTime creationDate, User user, Bank bank) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.creationDate = creationDate;
+        this.user = user;
+        this.bank = bank;
+    }
+
+    public Account() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
 }
