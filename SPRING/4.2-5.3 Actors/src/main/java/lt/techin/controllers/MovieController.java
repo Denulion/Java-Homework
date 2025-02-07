@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,11 +29,13 @@ public class MovieController {
         this.movieService = movieService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/movies")
     public ResponseEntity<List<MovieDTO>> getMovies() {
         return ResponseEntity.ok(MovieMapper.toMovieDTOList(movieService.findAllMovies()));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/movies/{id}")
     public ResponseEntity<MovieDTO> getMovie(@PathVariable long id) {
         Optional<Movie> foundMovie = movieService.findMovieById(id);
@@ -42,6 +45,7 @@ public class MovieController {
         return ResponseEntity.ok(MovieMapper.toMovieDTO(foundMovie.get()));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/movies")
     public ResponseEntity<?> postMovie(@Valid @RequestBody MovieDTO movieDTO) {
         if (movieService.existsMovieByTitle(movieDTO.title()) && movieService.existsMovieByDirector(movieDTO.director())) {
@@ -58,6 +62,7 @@ public class MovieController {
                 .body(MovieMapper.toMovieDTO(savedMovie));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/movies/search")
     public ResponseEntity<MovieDTO> findMovieByTitle(@RequestParam String title) {
         for (Movie movie : movieService.findAllMovies()) {
@@ -68,11 +73,13 @@ public class MovieController {
         return ResponseEntity.ok(MovieMapper.toMovieDTO(movieService.findMovieByTitle(title)));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/movies/search/by-title")
     public ResponseEntity<List<MovieDTO>> getMoviesByTitleContaining(@RequestParam String title) {
         return ResponseEntity.ok(MovieMapper.toMovieDTOList(movieService.findAllMoviesByTitleContaining(title)));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/movies/{id}")
     public ResponseEntity<?> putMovies(@PathVariable long id, @Valid @RequestBody MovieDTO movieDTO) {
         if (movieService.existsMovieById(id)) {
@@ -99,6 +106,7 @@ public class MovieController {
                 .body(MovieMapper.toMovieDTO(savedMovie));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/movies/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable long id) {
         if (!movieService.existsMovieById(id)) {
@@ -110,6 +118,7 @@ public class MovieController {
     }
 
     //Pagination
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/movies/pagination")
     public ResponseEntity<Page<MovieDTO>> getMoviePage(@RequestParam int page,
                                                        @RequestParam int size,

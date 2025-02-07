@@ -17,13 +17,31 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(User user){return userRepository.save(user);}
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 
-    public Optional<User> findUserByUsername(String username){return userRepository.findByUsername(username);}
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
-    public List<User> findAllUsers(){return userRepository.findAll();}
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
 
     public boolean existsUserByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    public boolean existsUserById(long id) {
+        return userRepository.existsById(id);
+    }
+
+    public Optional<User> findUserById(long id) {
+        return userRepository.findById(id);
+    }
+
+    public void deleteUserById(long id) {
+        userRepository.deleteById(id);
     }
 }

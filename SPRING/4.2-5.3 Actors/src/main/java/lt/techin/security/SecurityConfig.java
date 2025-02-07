@@ -1,6 +1,5 @@
 package lt.techin.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,15 +21,17 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-//                        .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                                .anyRequest().authenticated()
+                        //.anyRequest().access(authorizationManager)
+                        //.requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN") - /** can be used
                 );
 
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

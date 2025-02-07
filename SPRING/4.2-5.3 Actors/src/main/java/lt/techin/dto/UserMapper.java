@@ -2,6 +2,7 @@ package lt.techin.dto;
 
 import lt.techin.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserMapper {
@@ -16,12 +17,18 @@ public class UserMapper {
 
         user.setUsername(userDTO.username());
         user.setPassword(userDTO.password());
-        user.setRoles(RoleMapper.toRoleListFromDTO(userDTO.roles()));
+        user.setRoles(new ArrayList<>(RoleMapper.toRoleListFromDTO(userDTO.roles())));
 
         return user;
     }
 
     public static UserDTO toUserDTO(User user) {
         return new UserDTO(user.getUsername(), user.getPassword(), RoleMapper.toRoleDTOList(user));
+    }
+
+    public static void updateUserFromDTO(User user, UserDTO userDTO) {
+        user.setUsername(userDTO.username());
+        user.setPassword(userDTO.password());
+        user.setRoles(new ArrayList<>(RoleMapper.toRoleListFromDTO(userDTO.roles())));
     }
 }
