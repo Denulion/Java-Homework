@@ -3,6 +3,7 @@ package lt.techin.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,6 +23,12 @@ public class SecurityConfig {
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/users/{id}").access((authentication, context) ->
+                                        new AuthorizationDecision(SecurityUtils.isAdminOrOwner(authentication.get(), Long.parseLong(context.getVariables().get("id")))))
+                                .requestMatchers(HttpMethod.PUT, "/api/users/{id}").access((authentication, context) ->
+                                        new AuthorizationDecision(SecurityUtils.isAdminOrOwner(authentication.get(), Long.parseLong(context.getVariables().get("id")))))
+                                .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").access((authentication, context) ->
+                                        new AuthorizationDecision(SecurityUtils.isAdminOrOwner(authentication.get(), Long.parseLong(context.getVariables().get("id")))))
                                 .anyRequest().authenticated()
                         //.anyRequest().access(authorizationManager)
                         //.requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN") - /** can be used
