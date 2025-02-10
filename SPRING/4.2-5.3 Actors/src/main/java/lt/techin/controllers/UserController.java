@@ -35,8 +35,7 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(UserMapper.toUserDTOList(userService.findAllUsers()));
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
+    
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable long id) {
         Optional<User> foundUser = userService.findUserById(id);
