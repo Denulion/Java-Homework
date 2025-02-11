@@ -82,6 +82,9 @@ public class MovieController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/movies/{id}")
     public ResponseEntity<?> putMovies(@PathVariable long id, @Valid @RequestBody MovieDTO movieDTO) {
+        if (!movieService.existsMovieById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         if (movieService.existsMovieById(id)) {
             Movie movieFromDb = movieService.findMovieById(id).get();
 
