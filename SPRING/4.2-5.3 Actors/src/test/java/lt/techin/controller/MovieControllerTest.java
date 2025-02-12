@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -28,6 +30,7 @@ import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -501,4 +504,147 @@ public class MovieControllerTest {
         Mockito.verify(movieService, times(0)).deleteMovieById(movieId);
     }
 
+    //happy path
+    @Test
+    @WithMockUser(authorities = "ROLE_USER")
+    void getMoviePage_whenValidParams_thenReturnAnd200() throws Exception {
+        // given
+        int page = 0;
+        int size = 2;
+        String sort = null;
+
+        Movie movie1 = new Movie("First Title", "Direktor Direktoraitis",
+                List.of(),
+                List.of(new Actor("Actoraitis"), new Actor("Aktoravicius")));
+
+        Movie movie2 = new Movie("Second Title", "Direktoravicius",
+                List.of(new Screening("Theatre", LocalTime.of(22, 30), LocalDate.of(2025, 5, 10))),
+                List.of(new Actor("Actoraitis"), new Actor("Deimantaitis")));
+
+        Page<Movie> moviePage = new PageImpl<>(List.of(movie1, movie2));
+        given(movieService.findAllMoviePage(page, size, sort)).willReturn(moviePage);
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/pagination")
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size)))
+                // then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content").isArray())
+                .andExpect(jsonPath("content", Matchers.hasSize(2)))
+
+                .andExpect(jsonPath("content[0].title").value("First Title"))
+                .andExpect(jsonPath("content[0].director").value("Direktor Direktoraitis"))
+                .andExpect(jsonPath("content[0].screenings").isArray())
+                .andExpect(jsonPath("content[0].screenings", Matchers.hasSize(0)))
+                .andExpect(jsonPath("content[0].actors").isArray())
+                .andExpect(jsonPath("content[0].actors", Matchers.hasSize(2)))
+                .andExpect(jsonPath("content[0].actors[0].id").exists())
+                .andExpect(jsonPath("content[0].actors[0].name").value("Actoraitis"))
+                .andExpect(jsonPath("content[0].actors[1].id").exists())
+                .andExpect(jsonPath("content[0].actors[1].name").value("Aktoravicius"))
+
+                .andExpect(jsonPath("content[1].title").value("Second Title"))
+                .andExpect(jsonPath("content[1].director").value("Direktoravicius"))
+                .andExpect(jsonPath("content[1].screenings").isArray())
+                .andExpect(jsonPath("content[1].screenings", Matchers.hasSize(1)))
+                .andExpect(jsonPath("content[1].screenings[0].screeningTheatre").value("Theatre"))
+                .andExpect(jsonPath("content[1].screenings[0].time").value("22:30:00"))
+                .andExpect(jsonPath("content[1].screenings[0].date").value("2025-05-10"))
+                .andExpect(jsonPath("content[1].actors").isArray())
+                .andExpect(jsonPath("content[1].actors", Matchers.hasSize(2)))
+                .andExpect(jsonPath("content[1].actors[0].id").exists())
+                .andExpect(jsonPath("content[1].actors[0].name").value("Actoraitis"))
+                .andExpect(jsonPath("content[1].actors[1].id").exists())
+                .andExpect(jsonPath("content[1].actors[1].name").value("Deimantaitis"));
+
+        Mockito.verify(movieService, times(1)).findAllMoviePage(page, size, sort);
+    }
+
+    // happy path sorting
+    @Test
+    @WithMockUser(authorities = "ROLE_USER")
+    void getMoviePage_whenSorted_thenReturnSortedAnd200() throws Exception {
+        // given
+        int page = 0;
+        int size = 2;
+        String sort = "title";
+
+        Movie movie1 = new Movie("A Title", "Director A", List.of(), List.of(new Actor("Actor A")));
+        Movie movie2 = new Movie("B Title", "Director B", List.of(), List.of(new Actor("Actor B")));
+
+        Page<Movie> moviePage = new PageImpl<>(List.of(movie1, movie2));
+        given(movieService.findAllMoviePage(page, size, sort)).willReturn(moviePage);
+
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/pagination")
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size))
+                        .param("sort", sort))
+                // then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content").isArray())
+                .andExpect(jsonPath("content", Matchers.hasSize(2)))
+
+                .andExpect(jsonPath("content[0].title").value("A Title"))
+                .andExpect(jsonPath("content[0].director").value("Director A"))
+                .andExpect(jsonPath("content[0].screenings").isArray())
+                .andExpect(jsonPath("content[0].screenings").exists())
+
+                .andExpect(jsonPath("content[0].actors").isArray())
+                .andExpect(jsonPath("content[0].actors", Matchers.hasSize(1)))
+                .andExpect(jsonPath("content[0].actors[0].id").exists())
+                .andExpect(jsonPath("content[0].actors[0].name").value("Actor A"))
+
+                .andExpect(jsonPath("content[1].title").value("B Title"))
+                .andExpect(jsonPath("content[1].director").value("Director B"))
+                .andExpect(jsonPath("content[1].screenings").isArray())
+                .andExpect(jsonPath("content[1].screenings").exists())
+
+                .andExpect(jsonPath("content[1].actors").isArray())
+                .andExpect(jsonPath("content[1].actors", Matchers.hasSize(1)))
+                .andExpect(jsonPath("content[1].actors[0].id").exists())
+                .andExpect(jsonPath("content[1].actors[0].name").value("Actor B"));
+
+        Mockito.verify(movieService, times(1)).findAllMoviePage(page, size, sort);
+    }
+
+    // unhappy path
+    @Test
+    @WithMockUser(authorities = "ROLE_USER")
+    void getMoviePage_whenInvalidPageSize_thenReturnBadRequest() throws Exception {
+        // given
+        int page = 0;
+        int size = -1;
+        String sort = null;
+
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/pagination")
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size)))
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(movieService, times(0)).findAllMoviePage(page, size, sort);
+    }
+
+    // unhappy path
+    @Test
+    void getMoviePage_whenUserUnauthorized_thenReturnForbidden() throws Exception {
+        // given
+        int page = 0;
+        int size = 2;
+        String sort = null;
+
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/movies/pagination")
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size)))
+                // then
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").doesNotExist());
+
+        Mockito.verify(movieService, times(0)).findAllMoviePage(page, size, sort);
+    }
 }
