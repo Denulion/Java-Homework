@@ -30,7 +30,6 @@ import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,7 +46,7 @@ public class MovieControllerTest {
 
     //happy path
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void getMovies_withFindAll_thenReturnAllAnd200() throws Exception {
         //given
         Movie movie1 = new Movie("First Title", "Direktor Direktoraitis",
@@ -123,7 +122,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void getMovies_whenFindAllEmpty_thenReturnEmptyListAnd200() throws Exception {
         // given
         given(movieService.findAllMovies()).willReturn(List.of());
@@ -140,7 +139,7 @@ public class MovieControllerTest {
 
     //happy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void getMovie_whenFindOne_thenReturnOneAnd200() throws Exception {
         //given
         long movieId = 1L;
@@ -171,7 +170,7 @@ public class MovieControllerTest {
 
     //unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void getMovie_whenFindNone_thenRespond404() throws Exception {
         //given
         long movieId = 100L;
@@ -210,7 +209,7 @@ public class MovieControllerTest {
 
     // happy path
     @Test
-    @WithMockUser(authorities = "ROLE_ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void addMovie_whenAdminAddMovie_thenReturnAnd201() throws Exception {
         //given
         Movie movie = new Movie("First Title", "Direktor Direktoraitis",
@@ -248,7 +247,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void addMovie_whenAdminFailsValidation_thenReturnAnd400() throws Exception {
         //given
         Movie movie = new Movie("Invalid Movie", "Invalid Director",
@@ -273,7 +272,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void addMovie_whenUserTriesToSave_thenReturnAnd403() throws Exception {
         //given
         Movie movie = new Movie("First Title", "Direktor Direktoraitis",
@@ -322,7 +321,7 @@ public class MovieControllerTest {
 
     // happy path
     @Test
-    @WithMockUser(authorities = "ROLE_ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateMovie_whenAdminUpdatesMovie_thenReturnAnd200() throws Exception {
         //given
         long movieId = 1L;
@@ -365,7 +364,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void updateMovie_whenAdminUpdatesNonExistentMovie_thenReturnAnd404() throws Exception {
         //given
         long movieId = 100L;
@@ -391,7 +390,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void updateMovie_whenUserTriesToUpdateMovie_thenReturnAnd403() throws Exception {
         //given
         long movieId = 1L;
@@ -438,7 +437,7 @@ public class MovieControllerTest {
 
     // happy path
     @Test
-    @WithMockUser(authorities = "ROLE_ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void deleteMovie_whenAdminDeletesMovie_thenReturnAnd204() throws Exception {
         //given
         long movieId = 1L;
@@ -457,7 +456,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_ADMIN")
+    @WithMockUser(authorities = "SCOPE_ROLE_ADMIN")
     void deleteMovie_whenAdminDeletesNonExistentMovie_thenReturnAnd404() throws Exception {
         //given
         long movieId = 100L;
@@ -475,7 +474,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void deleteMovie_whenUserTriesToDeleteMovie_thenReturnAnd403() throws Exception {
         //given
         long movieId = 1L;
@@ -506,7 +505,7 @@ public class MovieControllerTest {
 
     //happy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void getMoviePage_whenValidParams_thenReturnAnd200() throws Exception {
         // given
         int page = 0;
@@ -563,7 +562,7 @@ public class MovieControllerTest {
 
     // happy path sorting
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
     void getMoviePage_whenSorted_thenReturnSortedAnd200() throws Exception {
         // given
         int page = 0;
@@ -611,8 +610,8 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    @WithMockUser(authorities = "ROLE_USER")
-    void getMoviePage_whenInvalidPageSize_thenReturnBadRequest() throws Exception {
+    @WithMockUser(authorities = "SCOPE_ROLE_USER")
+    void getMoviePage_whenInvalidPageSize_thenReturnAnd400() throws Exception {
         // given
         int page = 0;
         int size = -1;
@@ -631,7 +630,7 @@ public class MovieControllerTest {
 
     // unhappy path
     @Test
-    void getMoviePage_whenUserUnauthorized_thenReturnForbidden() throws Exception {
+    void getMoviePage_whenUserUnauthorized_thenReturnAnd401() throws Exception {
         // given
         int page = 0;
         int size = 2;
@@ -642,7 +641,7 @@ public class MovieControllerTest {
                         .param("page", String.valueOf(page))
                         .param("size", String.valueOf(size)))
                 // then
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").doesNotExist());
 
         Mockito.verify(movieService, times(0)).findAllMoviePage(page, size, sort);

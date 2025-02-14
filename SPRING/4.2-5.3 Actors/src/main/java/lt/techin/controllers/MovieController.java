@@ -1,6 +1,7 @@
 package lt.techin.controllers;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lt.techin.dto.MovieDTO;
 import lt.techin.dto.MovieMapper;
@@ -29,13 +30,13 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_USER')")
     @GetMapping("/movies")
     public ResponseEntity<List<MovieDTO>> getMovies() {
         return ResponseEntity.ok(MovieMapper.toMovieDTOList(movieService.findAllMovies()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_USER')")
     @GetMapping("/movies/{id}")
     public ResponseEntity<MovieDTO> getMovie(@PathVariable long id) {
         Optional<Movie> foundMovie = movieService.findMovieById(id);
@@ -45,7 +46,7 @@ public class MovieController {
         return ResponseEntity.ok(MovieMapper.toMovieDTO(foundMovie.get()));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @PostMapping("/movies")
     public ResponseEntity<?> postMovie(@Valid @RequestBody MovieDTO movieDTO) {
         if (movieService.existsMovieByTitle(movieDTO.title()) && movieService.existsMovieByDirector(movieDTO.director())) {
@@ -62,7 +63,7 @@ public class MovieController {
                 .body(MovieMapper.toMovieDTO(savedMovie));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_USER')")
     @GetMapping("/movies/search")
     public ResponseEntity<MovieDTO> findMovieByTitle(@RequestParam String title) {
         for (Movie movie : movieService.findAllMovies()) {
@@ -73,13 +74,13 @@ public class MovieController {
         return ResponseEntity.ok(MovieMapper.toMovieDTO(movieService.findMovieByTitle(title)));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_USER')")
     @GetMapping("/movies/search/by-title")
     public ResponseEntity<List<MovieDTO>> getMoviesByTitleContaining(@RequestParam String title) {
         return ResponseEntity.ok(MovieMapper.toMovieDTOList(movieService.findAllMoviesByTitleContaining(title)));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @PutMapping("/movies/{id}")
     public ResponseEntity<?> putMovies(@PathVariable long id, @Valid @RequestBody MovieDTO movieDTO) {
         if (!movieService.existsMovieById(id)) {
@@ -109,7 +110,7 @@ public class MovieController {
                 .body(MovieMapper.toMovieDTO(savedMovie));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @DeleteMapping("/movies/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable long id) {
         if (!movieService.existsMovieById(id)) {
@@ -121,10 +122,11 @@ public class MovieController {
     }
 
     //Pagination
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //Need pageDTO
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN') or hasAuthority('SCOPE_ROLE_USER')")
     @GetMapping("/movies/pagination")
     public ResponseEntity<Page<MovieDTO>> getMoviePage(@RequestParam int page,
-                                                       @RequestParam int size,
+                                                       @Min(0) @RequestParam int size,
                                                        @RequestParam(required = false) String sort) {
         Page<Movie> movies = movieService.findAllMoviePage(page, size, sort);
         Page<MovieDTO> dtoMovies = movies.map(MovieMapper::toMovieDTO);

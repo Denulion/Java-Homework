@@ -30,12 +30,12 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(UserMapper.toUserDTOList(userService.findAllUsers()));
     }
-    
+
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable long id) {
         Optional<User> foundUser = userService.findUserById(id);
@@ -69,7 +69,7 @@ public class UserController {
                 .body(UserPostResponseMapper.toUserPostResponseDTO(savedUser));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id, @Valid @RequestBody UserDTO userDTO) {
         if (userService.existsUserById(id)) {
@@ -96,7 +96,7 @@ public class UserController {
                 .body(UserMapper.toUserDTO(savedUser));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         if (!userService.existsUserById(id)) {

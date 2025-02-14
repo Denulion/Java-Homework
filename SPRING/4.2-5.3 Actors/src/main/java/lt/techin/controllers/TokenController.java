@@ -1,7 +1,10 @@
 package lt.techin.controllers;
 
+import lt.techin.model.User;
+import lt.techin.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -17,10 +20,12 @@ import java.util.stream.Collectors;
 public class TokenController {
 
     private final JwtEncoder encoder;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TokenController(JwtEncoder encoder) {
+    public TokenController(JwtEncoder encoder, UserRepository userRepository) {
         this.encoder = encoder;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/token")
@@ -29,22 +34,22 @@ public class TokenController {
         Instant now = Instant.now();
         long expiry = 36000L;
 
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
         // Rolės pateiktos vientisu string'u. Tai reikalinga tam, kad serveris nuskaitytu roles iš JWT
         String scope = authentication.getAuthorities().stream()
                 .map(s -> s.getAuthority())
                 .collect(Collectors.joining(" "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                // Norodome, kad mūsu serveris išdavė JWT
-                // Alternativos OAuth2 provideriai
                 .issuer("self")
-                // Išdavimo laikas
                 .issuedAt(now)
-                // Galiojimo laikas
                 .expiresAt(now.plusSeconds(expiry))
-                // Vartotoja identifikuojantis info
-                .subject(authentication.getName())
-                // Vartotojo informacija, galima papildyti prirašant daugiau .claim("key", value)
+                .subject(username)
+                .claim("user_id", user.getId())
                 .claim("scope", scope)
                 .build();
 
